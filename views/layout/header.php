@@ -410,17 +410,17 @@
                     <div class="tab-content custom-menu-content">
                         <div id="Home" class="tab-pane in active notika-tab-menu-bg animated flipInX">
                             <ul class="notika-main-menu-dropdown">
-                                <li><a href="index.html">Dashboard One</a>
+                                <li><a href="<?= url('index')?>">Dashboard One</a>
                                 </li>
-                                <li><a href="index-2.html">Dashboard Two</a>
+                                <li><a href="<?= url('index')?>">Dashboard Two</a>
                                 </li>
-                                <li><a href="index-3.html">Dashboard Three</a>
+                                <li><a href="<?= url('index')?>">Dashboard Three</a>
                                 </li>
-                                <li><a href="index-4.html">Dashboard Four</a>
+                                <li><a href="<?= url('index')?>">Dashboard Four</a>
                                 </li>
-                                <li><a href="analytics.html">Analytics</a>
+                                <li><a href="<?= url('index')?>">Analytics</a>
                                 </li>
-                                <li><a href="widgets.html">Widgets</a>
+                                <li><a href="<?= url('index')?>">Widgets</a>
                                 </li>
                             </ul>
                         </div>
