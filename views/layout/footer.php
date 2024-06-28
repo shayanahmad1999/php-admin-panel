@@ -77,9 +77,7 @@
 <!-- main JS
 		============================================ -->
 <script src="assets/js/main.js"></script>
-<!-- tawk chat JS
-		============================================ -->
-<script src="assets/js/tawk-chat.js"></script>
+
 </body>
 
 </html>
