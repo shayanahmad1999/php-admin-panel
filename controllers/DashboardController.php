@@ -14,3 +14,12 @@ class DashboardController{
         require_once "views/tables/data-table.php";
     }
 }
+
+$controller = new DashboardController();
+$action = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
+switch ($action) {
+        case 'dashboard' :
+            $pageTitle = "Dashboard";
+            $controller->index();
+            break;
+}
