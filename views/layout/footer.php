@@ -96,9 +96,19 @@
 		============================================ -->
 <script src="assets/js/dropzone/dropzone.js"></script>
 
- <!--  chosen JS
+<!--  chosen JS
 		============================================ -->
-		<script src="assets/js/chosen/chosen.jquery.js"></script>
+<script src="assets/js/chosen/chosen.jquery.js"></script>
+
+<!--  dialog JS
+		============================================ -->
+<script src="assets/js/dialog/sweetalert2.min.js"></script>
+<script src="assets/js/dialog/dialog-active.js"></script>
+
+<!--  wave JS
+		============================================ -->
+<script src="assets/js/wave/waves.min.js"></script>
+<script src="assets/js/wave/wave-active.js"></script>
 
 <!--  todo JS
 		============================================ -->

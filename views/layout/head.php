@@ -73,6 +73,15 @@
 		============================================ -->
     <link rel="stylesheet" href="assets/css/dropzone/dropzone.css">
 
+    <!-- dialog CSS
+		============================================ -->
+    <link rel="stylesheet" href="assets/css/dialog/sweetalert2.min.css">
+    <link rel="stylesheet" href="assets/css/dialog/dialog.css">
+
+    <!-- wave CSS
+		============================================ -->
+		<link rel="stylesheet" href="assets/css/wave/waves.min.css">
+
      <!-- Data Table JS
 		============================================ -->
     <link rel="stylesheet" href="assets/css/jquery.dataTables.min.css">
