@@ -60,20 +60,13 @@
 <script src="assets/js/knob/jquery.knob.js"></script>
 <script src="assets/js/knob/jquery.appear.js"></script>
 <script src="assets/js/knob/knob-active.js"></script>
-<!--  wave JS
-		============================================ -->
-<script src="assets/js/wave/waves.min.js"></script>
-<script src="assets/js/wave/wave-active.js"></script>
 <!--  todo JS
 		============================================ -->
 <script src="assets/js/todo/jquery.todo.js"></script>
 <!-- plugins JS
 		============================================ -->
 <script src="assets/js/plugins.js"></script>
-<!--  Chat JS
-		============================================ -->
-<script src="assets/js/chat/moment.min.js"></script>
-<script src="assets/js/chat/jquery.chat.js"></script>
+
 <!-- main JS
 		============================================ -->
 <script src="assets/js/main.js"></script>

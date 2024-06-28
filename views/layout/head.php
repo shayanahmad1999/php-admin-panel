@@ -43,9 +43,7 @@
     <!-- notika icon CSS
 		============================================ -->
     <link rel="stylesheet" href="assets/css/notika-custom-icon.css">
-    <!-- wave CSS
-		============================================ -->
-    <link rel="stylesheet" href="assets/css/wave/waves.min.css">
+
     <!-- main CSS
 		============================================ -->
     <link rel="stylesheet" href="assets/css/main.css">
