@@ -67,6 +67,11 @@
 		============================================ -->
 <script src="assets/js/plugins.js"></script>
 
+<!-- Data Table JS
+		============================================ -->
+		<script src="assets/js/data-table/jquery.dataTables.min.js"></script>
+    <script src="assets/js/data-table/data-table-act.js"></script>
+
 <!-- main JS
 		============================================ -->
 <script src="assets/js/main.js"></script>
