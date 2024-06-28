@@ -4,8 +4,6 @@ require_once 'includes/function.php';
 require_once 'views/layout/head.php';
 require_once 'views/layout/header.php';
 
-require_once 'controllers/DashboardController.php';
-
 $page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
 $page = preg_replace('/[^-a-zA-Z0-9_]/', '', $page);
 
