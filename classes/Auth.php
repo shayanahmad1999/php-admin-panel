@@ -1,8 +1,9 @@
 <?php
 class Auth {
     public static function user() {
+        global $pdo;
         if (isset($_SESSION['user_id'])) {
-            return new User($_SESSION['user_id']);
+            return new User($pdo, $_SESSION['user_id']);
         }
         return null;
     }

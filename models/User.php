@@ -8,8 +8,7 @@ class User {
     public $name;
     public $email;
 
-    public function __construct($userId) {
-        global $pdo;
+    public function __construct($pdo, $userId) {
         $this->pdo = $pdo;
         $stmt = $this->pdo->prepare("SELECT * FROM users WHERE id = ?");
         $stmt->execute([$userId]);
