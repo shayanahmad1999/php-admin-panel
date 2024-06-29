@@ -1,6 +1,8 @@
 <?php
 
 require 'includes/config.php';
+require_once 'classes/Auth.php';
+require_once 'models/User.php';
 
 $page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
 
