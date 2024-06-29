@@ -53,10 +53,6 @@ class DashboardController{
     {
         require_once "views/appviews/dialogs.php";
     }
-    public function dropdowns()
-    {
-        require_once "views/appviews/dropdowns.php";
-    }
 }
 
 $controller = new DashboardController();
