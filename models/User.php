@@ -2,13 +2,22 @@
 
 class User {
     private $pdo;
+    private $user;
 
     public $id;
     public $name;
     public $email;
 
-    public function __construct($pdo) {
+    public function __construct($userId) {
+        global $pdo;
         $this->pdo = $pdo;
+        $stmt = $this->pdo->prepare("SELECT * FROM users WHERE id = ?");
+        $stmt->execute([$userId]);
+        $this->user = $stmt->fetch(PDO::FETCH_OBJ);
+    }
+
+    public function name() {
+        return $this->user->name;
     }
 
     public function getAllUsers() {
@@ -29,7 +38,8 @@ class User {
     }
 
     public function createUser($name, $email, $password) {
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        // $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        $hashed_password = $password;
         $stmt = $this->pdo->prepare('INSERT INTO users (name, email, password) VALUES (:name, :email, :password)');
         $stmt->bindParam(':name', $name);
         $stmt->bindParam(':email', $email);
@@ -51,17 +61,11 @@ class User {
         $stmt = $this->pdo->prepare("SELECT * FROM users WHERE email = ?");
         $stmt->execute([$email]);
         $user = $stmt->fetch(PDO::FETCH_OBJ);
-        if ($user && password_verify($password, $user->password)) {
+        // password_verify($password, $user->password)
+        if ($user && $password == $user->password) {
             return $user;
         }
         return false;
-    }
-
-    public static function auth($id) {
-        global $pdo;
-        $stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
-        $stmt->execute([$id]);
-        return $stmt->fetch(PDO::FETCH_OBJ);
     }
 }
 
