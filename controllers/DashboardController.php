@@ -54,12 +54,3 @@ class DashboardController{
         require_once "views/appviews/dialogs.php";
     }
 }
-
-$controller = new DashboardController();
-$action = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
-switch ($action) {
-        case 'dashboard' :
-            $pageTitle = "Dashboard";
-            $controller->index();
-            break;
-}
