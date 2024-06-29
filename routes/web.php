@@ -1,5 +1,7 @@
 <?php
 
+require 'includes/config.php';
+
 $page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
 
 $page = preg_replace('/[^-a-zA-Z0-9_]/', '', $page);
@@ -7,66 +9,54 @@ $page = preg_replace('/[^-a-zA-Z0-9_]/', '', $page);
 $controllerFile = 'controllers/' . $page . 'Controller.php';
 if (file_exists($controllerFile)) {
     require_once $controllerFile;
-} else {
-    require_once 'controllers/DashboardController.php';
+    $controllerClass = ucfirst($page) . 'Controller';
+    if (class_exists($controllerClass)) {
+        $controller = new $controllerClass($pdo);
 
-    $dashboardController = new DashboardController();
+        $action = isset($_GET['action']) ? $_GET['action'] : 'index';
+        $action = preg_replace('/[^-a-zA-Z0-9_]/', '', $action);
 
-    switch ($page) {
-        case 'dashboard':
-            $pageTitle = "Dashboard";
-            $dashboardController->index();
-            break;
-        case 'normaltable':
-            $pageTitle = "Normal Table";
-            $dashboardController->normaltable();
-            break;
-        case 'datatable':
-            $pageTitle = "Data Table";
-            $dashboardController->datatable();
-            break;
-        case 'form1':
-            $pageTitle = "Forms 1";
-            $dashboardController->form1();
-            break;
-        case 'form2':
-            $pageTitle = "Forms 2";
-            $dashboardController->form2();
-            break;
-        case 'form3':
-            $pageTitle = "Forms 3";
-            $dashboardController->form3();
-            break;
-        case 'notifications':
-            $pageTitle = "Notifications";
-            $dashboardController->notifications();
-            break;
-        case 'alerts':
-            $pageTitle = "alerts";
-            $dashboardController->alerts();
-            break;
-        case 'modals':
-            $pageTitle = "modals";
-            $dashboardController->modals();
-            break;
-        case 'buttons':
-            $pageTitle = "buttons";
-            $dashboardController->buttons();
-            break;
-        case 'tabs':
-            $pageTitle = "tabs";
-            $dashboardController->tabs();
-            break;
-        case 'accordian':
-            $pageTitle = "accordian";
-            $dashboardController->accordian();
-            break;
-        case 'dialogs':
-            $pageTitle = "dialogs";
-            $dashboardController->dialogs();
-            break;
-        default:
+        switch ($action) {
+            case 'index':
+                $pageTitle = ucfirst($page) . " List";
+                break;
+            case 'show':
+                $pageTitle = ucfirst($page) . " Details";
+                break;
+            case 'create':
+                $pageTitle = "Create " . ucfirst($page);
+                break;
+            case 'store':
+                $pageTitle = "Store " . ucfirst($page);
+                break;
+            case 'edit':
+                $pageTitle = "Edit " . ucfirst($page);
+                break;
+            case 'update':
+                $pageTitle = "Update " . ucfirst($page);
+                break;
+            case 'destroy':
+                $pageTitle = "Delete " . ucfirst($page);
+                break;
+            default:
+                $pageTitle = ucfirst($page);
+                break;
+        }
+
+        $params = array_merge($_GET, $_POST);
+
+        unset($params['page'], $params['action']);
+
+        if (method_exists($controller, $action)) {
+            ob_start();
+            call_user_func_array([$controller, $action], $params);
+            ob_end_flush();
+        } else {
             require_once 'views/error/404.php';
-            break;
+        }
+    } else {
+        require_once 'views/error/404.php';
     }
+} else {
+    require_once 'views/error/404.php';
 }
