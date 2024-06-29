@@ -41,6 +41,8 @@
                         </li>
                         <li><a href="<?= url('user') ?>"><i class="notika-icon notika-users"></i> Manage Users</a>
                         </li>
+                        <li><a href="<?= url('user&action=userlogout') ?>"><i class="notika-icon notika-users"></i> Logout</a>
+                        </li>
                     </ul>
                     <div class="tab-content custom-menu-content">
                         <div id="tables" class="tab-pane notika-tab-menu-bg animated flipInX">
