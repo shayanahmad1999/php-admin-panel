@@ -48,12 +48,12 @@ class User {
     }
 
     public function createUser($name, $email, $password) {
-        // $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-        $hashed_password = $password;
-        $stmt = $this->pdo->prepare('INSERT INTO users (name, email, password) VALUES (:name, :email, :password)');
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        $stmt = $this->pdo->prepare('INSERT INTO users (name, email, password, opassword) VALUES (:name, :email, :password, :opassword)');
         $stmt->bindParam(':name', $name);
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':password', $hashed_password);
+        $stmt->bindParam(':opassword', $password);
         return $stmt->execute();
     }
 
@@ -76,8 +76,8 @@ class User {
         $stmt = $this->pdo->prepare("SELECT * FROM users WHERE email = ?");
         $stmt->execute([$email]);
         $user = $stmt->fetch(PDO::FETCH_OBJ);
-        // password_verify($password, $user->password)
-        if ($user && $password == $user->password) {
+
+        if ($user && password_verify($password, $user->password)) {
             return $user;
         }
         return false;
