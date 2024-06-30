@@ -41,6 +41,8 @@
                         </li>
                         <li><a href="<?= url('user') ?>"><i class="notika-icon notika-users"></i> Manage Users</a>
                         </li>
+                        <li><a href="<?= url('product') ?>"><i class="notika-icon notika-product"></i> Manage Products</a>
+                        </li>
                         <li class="pull-right"><a href="<?= url('user&action=userlogout') ?>"><i class="notika-icon notika-logout"></i> Logout</a>
                         </li>
                     </ul>
