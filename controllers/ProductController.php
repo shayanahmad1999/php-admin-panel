@@ -2,8 +2,9 @@
 
 require_once "models/Product.php";
 require_once "controllers/Controller.php";
+require_once "classes/Validator.php";
 
-class ProductController extends Controller 
+class ProductController extends Controller
 {
     private $product;
 
@@ -21,12 +22,25 @@ class ProductController extends Controller
 
     public function store($name, $price)
     {
+        $validator = new Validator($_POST);
+        $validator->rules([
+            'name' => 'required',
+            'price' => 'required',
+        ]);
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            flash('name', $errors);
+            flash('price', $errors);
+            redirect('index?page=product');
+            return;
+        }
         $data = [
             'name' => $name,
             'price' => $price
         ];
         $this->product->create($data);
-        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        flash('success', 'Product successfully added!');
+        redirect('index?page=product');
     }
 
     public function edit($id)
@@ -37,17 +51,31 @@ class ProductController extends Controller
 
     public function update($name, $price, $id)
     {
+        $validator = new Validator($_POST);
+        $validator->rules([
+            'name' => 'required',
+            'price' => 'required',
+        ]);
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            flash('name', $errors);
+            flash('price', $errors);
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
+            return;
+        }
         $data = [
             'name' => $name,
             'price' => $price
         ];
         $this->product->update($id, $data);
-        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        flash('success', 'Product successfully updated!');
+        redirect('index?page=product');
     }
 
     public function destroy($id)
     {
         $this->product->delete($id);
+        flash('success', 'Product successfully deleted!');
         header('Location: ' . $_SERVER['HTTP_REFERER']);
     }
 
