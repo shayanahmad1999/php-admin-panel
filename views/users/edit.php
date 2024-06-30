@@ -43,6 +43,10 @@
                                         <div class="nk-int-st">
                                             <input type="text" name="name" value="<?= htmlspecialchars($user->name) ?>" class="form-control input-sm" placeholder="Enter Name">
                                         </div>
+                                        <?php $error = flash('name');
+                                        if (isset($error['name'])) : ?>
+                                            <span style="color: red;"><?= $error['name'] ?></span>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                             </div>
@@ -52,6 +56,10 @@
                                         <div class="nk-int-st">
                                             <input type="text" name="email" value="<?= htmlspecialchars($user->email) ?>" class="form-control input-sm" placeholder="Enter Email">
                                         </div>
+                                        <?php $error = flash('email');
+                                        if (isset($error['email'])) : ?>
+                                            <span style="color: red;"><?= $error['email'] ?></span>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                             </div>

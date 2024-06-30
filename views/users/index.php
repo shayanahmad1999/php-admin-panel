@@ -33,7 +33,12 @@
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="data-table-list">
                     <div class="basic-tb-hd">
-                        some success action take place
+                        <?php
+                        $success = flash('success');
+                        if ($success) {
+                            echo '<div class="alert alert-success">' . $success . '</div>';
+                        }
+                        ?>
                     </div>
                     <div class="table-responsive">
                         <table id="data-table-basic" class="table table-striped">

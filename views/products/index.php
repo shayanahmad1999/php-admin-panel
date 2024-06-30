@@ -33,9 +33,9 @@
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="form-example-wrap mg-t-30">
                     <div class="cmp-tb-hd cmp-int-hd">
-                        <h2><?= isset($product->id) ? 'Update ' . $product->name . ' product' : 'Create a new product'?></h2>
+                        <h2><?= isset($product->id) ? 'Update ' . $product->name . ' product' : 'Create a new product' ?></h2>
                     </div>
-                    <form action="<?= isset($product->id) ? url('product&action=update&id=',$product->id)  : url('product&action=store') ?>" method="post">
+                    <form action="<?= isset($product->id) ? url('product&action=update&id=' . $product->id) : url('product&action=store') ?>" method="post">
                         <div class="row">
                             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                 <div class="form-example-int form-example-st">
@@ -43,6 +43,9 @@
                                         <div class="nk-int-st">
                                             <input type="text" name="name" value="<?= isset($product->id) ? $product->name : '' ?>" class="form-control input-sm" placeholder="Enter Name">
                                         </div>
+                                        <?php $error = flash('name'); if (isset($error['name'])) : ?>
+                                            <span style="color: red;"><?= $error['name'] ?></span>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                             </div>
@@ -52,6 +55,9 @@
                                         <div class="nk-int-st">
                                             <input type="text" name="price" value="<?= isset($product->id) ? $product->price : '' ?>" class="form-control input-sm" placeholder="Enter Price">
                                         </div>
+                                        <?php $error = flash('price'); if (isset($error['price'])) : ?>
+                                            <span style="color: red;"><?= $error['price'] ?></span>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                             </div>
@@ -75,7 +81,12 @@
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="data-table-list">
                     <div class="basic-tb-hd">
-                        some success action take place
+                        <?php
+                        $success = flash('success');
+                        if ($success) {
+                            echo '<div class="alert alert-success">' . $success . '</div>';
+                        }
+                        ?>
                     </div>
                     <div class="table-responsive">
                         <table id="data-table-basic" class="table table-striped">
@@ -89,33 +100,31 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php 
-                                    if(isset($products)) :
+                                <?php
+                                if (isset($products)) :
                                     foreach ($products as $product) :
                                 ?>
-                                    <tr>
-                                        <td><?= htmlspecialchars($product->id) ?></td>
-                                        <td><?= htmlspecialchars($product->name) ?></td>
-                                        <td><?= htmlspecialchars($product->price) ?></td>
-                                        <td>
-                                            <?php 
-                                                if($product->status == 0) 
-                                                { 
-                                                    echo "<a href='". url('product&action=status&id='.$product->id.'&status='.$product->status) ."' class='badge btn-danger'>in Active</a>"; 
-                                                } 
-                                                else 
-                                                { 
-                                                    echo "<a href='". url('product&action=status&id='.$product->id.'&status='.$product->status) ."' class='badge btn-success'>Active</a>"; 
-                                                } 
-                                            ?>
-                                        </td>
-                                        <td>
-                                            <!-- <a href="index?page=user&action=show&id=<?= $user->id ?>">View</a> -->
-                                            <a href="<?= url('product&action=edit&id=')?><?= $product->id ?>">Edit</a>
-                                            <a href="<?= url('product&action=destroy&id=')?><?= $product->id ?>">Delete</a>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; endif; ?>
+                                        <tr>
+                                            <td><?= htmlspecialchars($product->id) ?></td>
+                                            <td><?= htmlspecialchars($product->name) ?></td>
+                                            <td><?= htmlspecialchars($product->price) ?></td>
+                                            <td>
+                                                <?php
+                                                if ($product->status == 0) {
+                                                    echo "<a href='" . url('product&action=status&id=' . $product->id . '&status=' . $product->status) . "' class='badge btn-danger'>in Active</a>";
+                                                } else {
+                                                    echo "<a href='" . url('product&action=status&id=' . $product->id . '&status=' . $product->status) . "' class='badge btn-success'>Active</a>";
+                                                }
+                                                ?>
+                                            </td>
+                                            <td>
+                                                <!-- <a href="index?page=user&action=show&id=<?= $user->id ?>">View</a> -->
+                                                <a href="<?= url('product&action=edit&id=') ?><?= $product->id ?>">Edit</a>
+                                                <a href="<?= url('product&action=destroy&id=') ?><?= $product->id ?>">Delete</a>
+                                            </td>
+                                        </tr>
+                                <?php endforeach;
+                                endif; ?>
                             </tbody>
                             <tfoot>
                                 <tr>
