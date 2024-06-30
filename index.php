@@ -4,8 +4,8 @@ require_once 'includes/functions.php';
 // Define pages that do not require login
 // $publicPages = ['login', 'user'];
 // if (!in_array($_GET['page'] ?? 'dashboard', $publicPages) && !isset($_SESSION['user_id'])) {
-// // Check if the user is logged in
-// // if (!isset($_SESSION['user_id']) && (!isset($_GET['page']) || $_GET['page'] !== 'login')) {
+// Check if the user is logged in
+// if (!Auth::user() && (!isset($_GET['page']) || $_GET['page'] !== 'login')) {
 //     require_once "views/auth/login.php";
 //     exit();
 // }

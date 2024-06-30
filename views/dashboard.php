@@ -1,8 +1,8 @@
 <!-- Start Status area -->
 <div class="notika-status-area" style="min-height: 100vh;">
     <div class="container">
-        <div class="row" style="margin-top: 10px;">
-            <div class="col-md-">
+        <div class="row" style="margin-top: 30px; margin-bottom:30px;">
+            <div class="col-md-3">
                 <div class="wb-traffic-inner notika-shadow sm-res-mg-t-30 tb-res-mg-t-30">
                     <div class="website-traffic-ctn">
                         <?php

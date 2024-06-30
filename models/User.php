@@ -13,11 +13,22 @@ class User {
         $stmt = $this->pdo->prepare("SELECT * FROM users WHERE id = ?");
         $stmt->execute([$userId]);
         $this->user = $stmt->fetch(PDO::FETCH_OBJ);
+
+        if ($this->user) {
+            $this->id = $this->user->id;
+            $this->name = $this->user->name;
+            $this->email = $this->user->email;
+        }
     }
 
     public function name() {
         return $this->user->name;
     }
+
+    public function id() {
+        return $this->user->id;
+    }
+
 
     public function getAllUsers() {
         $stmt = $this->pdo->query('SELECT * FROM users');
