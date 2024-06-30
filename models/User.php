@@ -63,8 +63,18 @@ class User {
     }
 
     public function deleteUser($id) {
-        $stmt = $this->pdo->prepare('DELETE FROM users WHERE id = ?');
-        return $stmt->execute([$id]);
+        $loggedInUserId = Auth::user()->id;
+        if($loggedInUserId == $id) {
+            $stmt = $this->pdo->prepare('DELETE FROM users WHERE id = ?');
+            $result = $stmt->execute([$id]);
+            if($stmt->rowCount()){
+                Auth::logout();
+                redirect('index?page=user&action=userloginView');
+            }
+        } else {
+            $stmt = $this->pdo->prepare('DELETE FROM users WHERE id = ?');
+            return $stmt->execute([$id]);
+        }
     }
 
     public function countUsers() {
