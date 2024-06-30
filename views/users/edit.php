@@ -17,7 +17,7 @@
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-3">
                             <div class="breadcomb-report">
-                                <a href="index?page=user">View Users</a>
+                                <a href="<?= url('user') ?>">View Users</a>
                             </div>
                         </div>
                     </div>
@@ -35,7 +35,7 @@
                     <div class="cmp-tb-hd cmp-int-hd">
                         <h2>Edit <?= $user->name ?> record</h2>
                     </div>
-                    <form action="index?page=user&action=update&id=<?= $user->id ?>" method="post">
+                    <form action="<?= url('user&action=update&id=') ?><?= $user->id ?>" method="post">
                         <div class="row">
                             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                 <div class="form-example-int form-example-st">

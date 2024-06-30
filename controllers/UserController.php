@@ -38,7 +38,7 @@ class UserController
     public function store($name, $email, $password)
     {
         $this->userModel->createUser($name, $email, $password);
-        require 'views/users/create.php';
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
     }
 
     public function edit($id)
@@ -50,13 +50,13 @@ class UserController
     public function update($id, $name, $email)
     {
         $this->userModel->updateUser($id, $name, $email);
-        header('Location: index');
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
     }
 
     public function destroy($id)
     {
         $this->userModel->deleteUser($id);
-        header('Location: index');
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
     }
 
     public function userlogin($email, $password)

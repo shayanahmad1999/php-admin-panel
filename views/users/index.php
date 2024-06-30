@@ -17,7 +17,7 @@
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-3">
                             <div class="breadcomb-report">
-                                <a href="index?page=user&action=create">Create User</a>
+                                <a href="<?= url('user&action=create') ?>">Create User</a>
                             </div>
                         </div>
                     </div>
@@ -53,8 +53,8 @@
                                         <td><?= htmlspecialchars($user->email) ?></td>
                                         <td>
                                             <!-- <a href="index?page=user&action=show&id=<?= $user->id ?>">View</a> -->
-                                            <a href="index?page=user&action=edit&id=<?= $user->id ?>">Edit</a>
-                                            <a href="index?page=user&action=destroy&id=<?= $user->id ?>">Delete</a>
+                                            <a href="<?= url('user&action=edit&id=') ?><?= $user->id ?>">Edit</a>
+                                            <a href="<?= url('user&action=destroy&id=') ?><?= $user->id ?>">Delete</a>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
