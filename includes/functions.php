@@ -20,3 +20,15 @@ function redirect($url) {
     header("Location: $url");
     exit();
 }
+
+
+function flash($key, $message = null)
+{
+    if ($message) {
+        $_SESSION[$key] = $message;
+    } else {
+        $message = $_SESSION[$key] ?? null;
+        unset($_SESSION[$key]);
+        return $message;
+    }
+}
