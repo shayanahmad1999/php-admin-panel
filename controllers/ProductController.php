@@ -1,13 +1,15 @@
 <?php
 
 require_once "models/Product.php";
+require_once "controllers/Controller.php";
 
-class ProductController
+class ProductController extends Controller 
 {
     private $product;
 
     public function __construct($pdo)
     {
+        parent::__construct();
         $this->product = new Product($pdo);
     }
 
