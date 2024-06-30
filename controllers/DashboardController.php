@@ -1,11 +1,21 @@
 <?php
 require_once "controllers/Controller.php";
+require_once 'models/User.php';
+require_once 'models/Product.php';
 class DashboardController extends Controller{
-    public function __construct() {
+    private $userModel;
+    private $productModel;
+    protected $pdo;
+    public function __construct($pdo) {
         parent::__construct();
+        $this->pdo = $pdo;
+        $this->userModel = new User($pdo, 1);
+        $this->productModel = new Product($pdo);
     }
     public function index()
     {
+        $users = $this->userModel->countUsers();
+        $products = $this->productModel->count();
         require_once "views/dashboard.php";
     }
     public function normaltable()
