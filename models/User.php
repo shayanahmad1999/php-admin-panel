@@ -67,6 +67,11 @@ class User {
         return $stmt->execute([$id]);
     }
 
+    public function countUsers() {
+        $stmt = $this->pdo->query('SELECT COUNT(*) as total_users FROM users');
+        return $stmt->fetch(PDO::FETCH_OBJ);
+    }
+
     public function loginAction($email, $password) {
         $stmt = $this->pdo->prepare("SELECT * FROM users WHERE email = ?");
         $stmt->execute([$email]);
