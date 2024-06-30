@@ -1,6 +1,9 @@
 <?php
-
-class DashboardController{
+require_once "controllers/Controller.php";
+class DashboardController extends Controller{
+    public function __construct() {
+        parent::__construct();
+    }
     public function index()
     {
         require_once "views/dashboard.php";

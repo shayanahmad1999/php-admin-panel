@@ -1,8 +1,9 @@
 <?php
 require_once 'classes/Auth.php';
 require_once 'models/User.php';
+require_once "controllers/Controller.php";
 
-class UserController
+class UserController extends Controller
 {
     protected $userModel;
     protected $pdo;
@@ -20,6 +21,7 @@ class UserController
 
     public function index()
     {
+        $this->requireAuthentication();
         $users = $this->userModel->getAllUsers();
         require 'views/users/index.php';
     }
@@ -32,6 +34,7 @@ class UserController
 
     public function create()
     {
+        $this->requireAuthentication();
         require 'views/users/create.php';
     }
 
@@ -43,6 +46,7 @@ class UserController
 
     public function edit($id)
     {
+        $this->requireAuthentication();
         $user = $this->userModel->getUserById($id);
         require 'views/users/edit.php';
     }
@@ -55,8 +59,14 @@ class UserController
 
     public function destroy($id)
     {
+        $this->requireAuthentication();
         $this->userModel->deleteUser($id);
         header('Location: ' . $_SERVER['HTTP_REFERER']);
+    }
+
+    public function userloginView()
+    {
+        require 'views/auth/login.php';
     }
 
     public function userlogin($email, $password)
@@ -81,8 +91,9 @@ class UserController
     }
     public function userlogout()
     {
+        $this->requireAuthentication();
         Auth::logout();
-        require_once "views/auth/login.php";
+        redirect('index?page=user&action=userloginView');
         exit();
     }
 }
