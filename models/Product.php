@@ -31,4 +31,8 @@ class Product {
     public function delete($id) {
         return $this->model->delete($id);
     }
+
+    public function count() {
+        return $this->model->count();
+    }
 }

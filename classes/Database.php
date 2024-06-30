@@ -90,4 +90,14 @@ class DatabaseManager {
             return false;
         }
     }
+
+    public function count() {
+        try {
+            $stmt = $this->pdo->query("SELECT COUNT(*) as count FROM $this->table");
+            return $stmt->fetch(PDO::FETCH_OBJ);
+        } catch (PDOException $e) {
+            return 0; 
+        }
+    }
+    
 }
