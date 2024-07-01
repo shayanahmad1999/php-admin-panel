@@ -31,16 +31,19 @@ function submitForm(form) {
                 form.reset();
                 $('table tbody').find('button[data-id="' + res.id + '"]').closest('tr').replaceWith(res.data);
             } else if (res.status === 'error') {
-                // Display validation errors or other errors
                 console.error('Validation errors:', res.data);
-                // Example: Display error messages in your form
-                $('#nameerror').html(res.data.name);
-                $('#priceerror').html(res.data.price);
+                if (res.data) {
+                    $.each(res.data, function (key, value) {
+                        var sanitizedValue = $('<div>').text(value).html();
+                        $('#' + key).val(sanitizedValue);
+                    });
+                }
+                // $('#nameerror').html(res.data.name);
+                // $('#priceerror').html(res.data.price);
             }
         },
         error: function (xhr, status, error) {
             console.error('AJAX error:', error);
-            // Handle AJAX errors (e.g., network issues)
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
