@@ -16,7 +16,8 @@ class UserController extends Controller
         // $this->userModel = new User($pdo);
     }
 
-    private function getCurrentUserId() {
+    private function getCurrentUserId()
+    {
         return isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
     }
 
@@ -47,7 +48,7 @@ class UserController extends Controller
             'email' => 'required|email',
             'password' => 'required|min:6',
         ]);
-        if($validator->fails()) {
+        if ($validator->fails()) {
             $errors = $validator->errors();
             flash('name', $errors);
             flash('email', $errors);
@@ -74,7 +75,7 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required|email',
         ]);
-        if($validator->fails()) {
+        if ($validator->fails()) {
             $errors = $validator->errors();
             flash('name', $errors);
             flash('email', $errors);
@@ -108,8 +109,8 @@ class UserController extends Controller
             header('Location: index?page=dashboard');
             exit();
         } else {
-            
-            $existingUser = $this->userModel->getUserByEmail($email); 
+
+            $existingUser = $this->userModel->getUserByEmail($email);
 
             if ($existingUser) {
                 $_SESSION['error'] = 'Incorrect password.';
