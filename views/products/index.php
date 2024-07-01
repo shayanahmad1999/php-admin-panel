@@ -35,17 +35,19 @@
                     <div class="cmp-tb-hd cmp-int-hd">
                         <h2><?= isset($product->id) ? 'Update ' . $product->name . ' product' : 'Create a new product' ?></h2>
                     </div>
-                    <form action="<?= isset($product->id) ? url('product&action=update&id=' . $product->id) : url('product&action=store') ?>" method="post">
+                    <form onsubmit="submitForm(this); return false;" action="<?= isset($product->id) ? url('product&action=update&id=' . $product->id) : url('product&action=store') ?>" method="post">
                         <div class="row">
                             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                 <div class="form-example-int form-example-st">
                                     <div class="form-group">
                                         <div class="nk-int-st">
-                                            <input type="text" name="name" value="<?= isset($product->id) ? $product->name : '' ?>" class="form-control input-sm" placeholder="Enter Name">
+                                            <input type="text" name="name" id="name" value="<?= isset($product->id) ? $product->name : '' ?>" class="form-control input-sm" placeholder="Enter Name">
                                         </div>
-                                        <?php $error = flash('name'); if (isset($error['name'])) : ?>
+                                        <?php $error = flash('name');
+                                        if (isset($error['name'])) : ?>
                                             <span style="color: red;"><?= $error['name'] ?></span>
                                         <?php endif; ?>
+                                        <div id="nameerror" style="color: red;"></div>
                                     </div>
                                 </div>
                             </div>
@@ -53,16 +55,19 @@
                                 <div class="form-example-int form-example-st">
                                     <div class="form-group">
                                         <div class="nk-int-st">
-                                            <input type="text" name="price" value="<?= isset($product->id) ? $product->price : '' ?>" class="form-control input-sm" placeholder="Enter Price">
+                                            <input type="text" name="price" id="price" value="<?= isset($product->id) ? $product->price : '' ?>" class="form-control input-sm" placeholder="Enter Price">
                                         </div>
-                                        <?php $error = flash('price'); if (isset($error['price'])) : ?>
+                                        <?php $error = flash('price');
+                                        if (isset($error['price'])) : ?>
                                             <span style="color: red;"><?= $error['price'] ?></span>
                                         <?php endif; ?>
+                                        <div id="priceerror" style="color: red;"></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                 <div class="form-example-int">
+                                    <input type="hidden" name="update_key" value="0">
                                     <button type="submit" class="btn btn-success notika-btn-success"><?= isset($product->id) ? 'Update' : 'Submit' ?></button>
                                 </div>
                             </div>
@@ -88,7 +93,7 @@
                         }
                         ?>
                     </div>
-                    <div class="table-responsive">
+                    <div id="datarecords" class="table-responsive">
                         <table id="data-table-basic" class="table table-striped">
                             <thead>
                                 <tr>
@@ -111,16 +116,17 @@
                                             <td>
                                                 <?php
                                                 if ($product->status == 0) {
-                                                    echo "<a href='" . url('product&action=status&id=' . $product->id . '&status=' . $product->status) . "' class='badge btn-danger'>in Active</a>";
+                                                    echo "<a href='javascript:;' class='badge btn-danger' onclick=\"statusChange('" . url('product&action=status&id=' . $product->id . '&status=' . $product->status) . "', " . $product->id . ")\" data-id=\"" . $product->id . "\">in Active</a>";
                                                 } else {
-                                                    echo "<a href='" . url('product&action=status&id=' . $product->id . '&status=' . $product->status) . "' class='badge btn-success'>Active</a>";
+                                                    echo "<a href='javascript:;' class='badge btn-success' onclick=\"statusChange('" . url('product&action=status&id=' . $product->id . '&status=' . $product->status) . "', " . $product->id . ")\" data-id=\"" . $product->id . "\">Active</a>";
                                                 }
                                                 ?>
+
                                             </td>
                                             <td>
                                                 <!-- <a href="index?page=user&action=show&id=<?= $user->id ?>">View</a> -->
-                                                <a href="<?= url('product&action=edit&id=') ?><?= $product->id ?>">Edit</a>
-                                                <a href="<?= url('product&action=destroy&id=') ?><?= $product->id ?>">Delete</a>
+                                                <button onclick="ajaxLoad('<?= url("product&action=edit&id=$product->id") ?>', <?= $product->id ?>)" data-id="<?= $product->id ?>" class="btn btn-info btn-sm">Edit</button>
+                                                <button onclick="ajaxLoad('<?= url("product&action=destroy&id=$product->id") ?>', <?= $product->id ?>)" data-id="<?= $product->id ?>" class="btn btn-danger btn-sm">Delete</button>
                                             </td>
                                         </tr>
                                 <?php endforeach;
