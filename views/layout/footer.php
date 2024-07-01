@@ -14,6 +14,9 @@
 <!-- jquery
 		============================================ -->
 <script src="assets/js/vendor/jquery-1.12.4.min.js"></script>
+
+<!-- custom ajax code -->
+<script src="assets/custom/ajax.js"></script>
 <!-- bootstrap JS
 		============================================ -->
 <script src="assets/js/bootstrap.min.js"></script>
