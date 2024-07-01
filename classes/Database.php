@@ -29,6 +29,15 @@ class DatabaseManager {
         }
     }
 
+    public function lastInsertedId() {
+        try {
+            return $this->pdo->lastInsertId();
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+            return null;
+        }
+    }
+
     public function findByConditions($conditions = []) {
         try {
             $sql = "SELECT * FROM $this->table";

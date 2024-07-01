@@ -12,6 +12,10 @@ class Product {
         
     }
 
+    public function lastInsertedId() {
+        return $this->model->lastInsertedId();
+    }
+
     public function getById($id) {
         return $this->model->findById($id);
     }
