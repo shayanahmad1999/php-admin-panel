@@ -1,14 +1,17 @@
 <?php
-class DatabaseManager {
+class DatabaseManager
+{
     private $pdo;
     private $table;
 
-    public function __construct(PDO $pdo, $table) {
+    public function __construct(PDO $pdo, $table)
+    {
         $this->pdo = $pdo;
         $this->table = $table;
     }
 
-    public function create($data) {
+    public function create($data)
+    {
         try {
             $fields = implode(', ', array_keys($data));
             $placeholders = implode(', ', array_fill(0, count($data), '?'));
@@ -19,7 +22,8 @@ class DatabaseManager {
         }
     }
 
-    public function findById($id) {
+    public function findById($id)
+    {
         try {
             $stmt = $this->pdo->prepare("SELECT * FROM $this->table WHERE id = ?");
             $stmt->execute([$id]);
@@ -29,7 +33,8 @@ class DatabaseManager {
         }
     }
 
-    public function lastInsertedId() {
+    public function lastInsertedId()
+    {
         try {
             return $this->pdo->lastInsertId();
         } catch (PDOException $e) {
@@ -38,7 +43,8 @@ class DatabaseManager {
         }
     }
 
-    public function findByConditions($conditions = []) {
+    public function findByConditions($conditions = [])
+    {
         try {
             $sql = "SELECT * FROM $this->table";
             $params = [];
@@ -62,7 +68,8 @@ class DatabaseManager {
         }
     }
 
-    public function findAll() {
+    public function findAll()
+    {
         try {
             $stmt = $this->pdo->query("SELECT * FROM $this->table");
             return $stmt->fetchAll(PDO::FETCH_OBJ);
@@ -71,7 +78,8 @@ class DatabaseManager {
         }
     }
 
-    public function update($id, $data) {
+    public function update($id, $data)
+    {
         try {
             $fields = '';
             $params = [];
@@ -91,7 +99,8 @@ class DatabaseManager {
         }
     }
 
-    public function delete($id) {
+    public function delete($id)
+    {
         try {
             $stmt = $this->pdo->prepare("DELETE FROM $this->table WHERE id = ?");
             return $stmt->execute([$id]);
@@ -100,13 +109,34 @@ class DatabaseManager {
         }
     }
 
-    public function count() {
+    public function count()
+    {
         try {
             $stmt = $this->pdo->query("SELECT COUNT(*) as count FROM $this->table");
             return $stmt->fetch(PDO::FETCH_OBJ);
         } catch (PDOException $e) {
-            return 0; 
+            return 0;
         }
     }
-    
+
+    public function hasMany($related, $foreignKey, $localKey)
+    {
+        $instance = new $related;
+        return $instance->where($foreignKey, $this->$localKey);
+    }
+
+    public function belongsTo($related, $foreignKey, $localKey)
+    {
+        $instance = new $related;
+        $foreignValue = $this->$foreignKey;
+        return $instance->where($localKey, $foreignValue);
+    }
+
+    public function where($column, $value) {
+        $sql = "SELECT * FROM " . $this->table . " WHERE $column = ?";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$value]);
+        return $stmt->fetchAll(PDO::FETCH_CLASS, get_class($this));
+    }
+       
 }
