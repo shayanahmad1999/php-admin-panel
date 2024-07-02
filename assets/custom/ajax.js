@@ -93,6 +93,9 @@ function ajaxLoad(url, id) {
                     $.each(res.data, function (key, value) {
                         var sanitizedValue = $('<div>').text(value).html();
                         $('#' + key).val(sanitizedValue);
+                        if (key === 'product_id') {
+                            $('select[name="products[]"]').val(value.split(',')).trigger("chosen:updated");
+                        }
                     });
                 } else {
                     alert("User data not found.");
