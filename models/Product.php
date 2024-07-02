@@ -1,6 +1,6 @@
 <?php
 require_once "classes/Database.php";
-class Product {
+class Product extends DatabaseManager{
     private $model;
 
     public function __construct($pdo) {
@@ -38,5 +38,9 @@ class Product {
 
     public function count() {
         return $this->model->count();
+    }
+
+    public function category() {
+        return $this->belongsTo(Category::class, 'product_id', 'id');
     }
 }
