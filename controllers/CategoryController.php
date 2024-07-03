@@ -22,8 +22,7 @@ class CategoryController extends Controller
         $categories = $this->category->getAll();
         $products = $this->product->getAll();
         foreach ($categories as $category) {
-            $product_id = $category->product_id;
-            // $category->products = $category->products(); 
+            $category->product_names = $this->category->getProductNames($category->id);
         }
         require_once "views/categories/index.php";
     }

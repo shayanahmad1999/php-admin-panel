@@ -2,9 +2,11 @@
 require_once "classes/Database.php";
 class Category extends DatabaseManager{
     private $model;
+    private $proModel;
 
     public function __construct($pdo) {
         $this->model = new DatabaseManager($pdo, 'categories');
+        $this->proModel = new DatabaseManager($pdo, 'products');
     }
 
     public function create($data) {
@@ -40,8 +42,23 @@ class Category extends DatabaseManager{
         return $this->model->count();
     }
 
-
     public function products() {
         return $this->hasMany(Product::class, 'product_id', 'id');
+    }
+
+    public function getProductNames($categoryId) {
+        $category = $this->getById($categoryId);
+        if ($category && $category->product_id) {
+            $productIds = explode(',', $category->product_id);
+            $productNames = [];
+            foreach ($productIds as $productId) {
+                $product = $this->proModel->findById($productId);
+                if ($product) {
+                    $productNames[] = $product->name;
+                }
+            }
+            return $productNames;
+        }
+        return [];
     }
 }

@@ -33,15 +33,15 @@
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="form-example-wrap mg-t-30">
                     <div class="cmp-tb-hd cmp-int-hd">
-                        <h2><?= isset($category->id) ? 'Update ' . $category->name . ' category' : 'Create a new category' ?></h2>
+                        <h2>Create a new category</h2>
                     </div>
-                    <form onsubmit="submitForm(this); return false;" action="<?= isset($category->id) ? url('category&action=update&id=' . $category->id) : url('category&action=store') ?>" method="post">
+                    <form onsubmit="submitForm(this); return false;" action="<?=  url('category&action=store') ?>" method="post">
                         <div class="row">
                             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                 <div class="form-example-int form-example-st">
                                     <div class="form-group">
                                         <div class="nk-int-st">
-                                            <input type="text" name="name" id="name" value="<?= isset($category->id) ? $category->name : '' ?>" class="form-control input-sm" placeholder="Enter Name">
+                                            <input type="text" name="name" id="name" value="" class="form-control input-sm" placeholder="Enter Name">
                                         </div>
                                         <?php $error = flash('name');
                                         if (isset($error['name'])) : ?>
@@ -55,7 +55,7 @@
                                 <div class="form-example-int form-example-st">
                                     <div class="form-group">
                                         <div class="nk-int-st">
-                                            <input type="text" name="description" id="description" value="<?= isset($category->id) ? $category->description : '' ?>" class="form-control input-sm" placeholder="Enter Description">
+                                            <input type="text" name="description" id="description" value="" class="form-control input-sm" placeholder="Enter Description">
                                         </div>
                                         <?php $error = flash('description');
                                         if (isset($error['description'])) : ?>
@@ -77,7 +77,7 @@
                             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                 <div class="form-example-int">
                                     <input type="hidden" name="update_key" value="0">
-                                    <button type="submit" class="btn btn-success notika-btn-success"><?= isset($category->id) ? 'Update' : 'Submit' ?></button>
+                                    <button type="submit" class="btn btn-success notika-btn-success">Submit</button>
                                 </div>
                             </div>
                         </div>
@@ -122,7 +122,13 @@
                                             <td><?= htmlspecialchars($category->id) ?></td>
                                             <td><?= htmlspecialchars($category->name) ?></td>
                                             <td><?= htmlspecialchars($category->description) ?></td>
-                                            <td><?= htmlspecialchars($category->product[0]->name ?? 'No Product') ?></td>
+                                            <td>
+                                                <?php if (!empty($category->product_names)) : ?>
+                                                    <?= implode(', ', $category->product_names) ?>
+                                                <?php else : ?>
+                                                    No products
+                                                <?php endif; ?>
+                                            </td>
                                             <td>
                                                 <button onclick="ajaxLoad('<?= url("category&action=edit&id=$category->id") ?>', <?= $category->id ?>)" data-id="<?= $category->id ?>" class="btn btn-info btn-sm">Edit</button>
                                                 <button onclick="ajaxLoad('<?= url("category&action=destroy&id=$category->id") ?>', <?= $category->id ?>)" data-id="<?= $category->id ?>" class="btn btn-danger btn-sm">Delete</button>
