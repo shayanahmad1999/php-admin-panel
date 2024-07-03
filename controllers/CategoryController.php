@@ -58,13 +58,14 @@ class CategoryController extends Controller
         if ($update_key !== null) {
             $this->category->update($update_key, $data);
             $updatedcategory = $this->category->getById($update_key);
-
+            $productName = (!empty($updatedcategory->product_names)) ? implode(', ', $updatedcategory->product_names) : "No products";
             if ($updatedcategory) {
                 $updatedData = '
                 <tr>
                     <td>' . $updatedcategory->id . '</td>
                     <td>' . $updatedcategory->name . '</td>
                     <td>' . $updatedcategory->description . '</td>
+                    <td>' . $productName . '</td>
                     <td>
                         <button class="btn btn-info btn-sm" onclick="ajaxLoad(\'' . url('category&action=edit&id=' . $updatedcategory->id) . '\', \'' . $updatedcategory->id . '\')" data-id="' . $updatedcategory->id . '">Edit</button>
                         <button  class="btn btn-danger btn-sm" onclick="ajaxLoad(\'' . url('category&action=destroy&id=' . $updatedcategory->id) . '\', \'' . $updatedcategory->id . '\')" data-id="' . $updatedcategory->id . '">Delete</button>
@@ -80,13 +81,14 @@ class CategoryController extends Controller
         $this->category->create($data);
         $lastInsertedId = $this->category->lastInsertedId();
         $fetch = $lastInsertedId ? $this->category->getById($lastInsertedId) : null;
-
+        $productName = !empty($fetch->product_names) ? implode(', ', $fetch->product_names) : "No products";
         if ($fetch) {
             $newData = '
                         <tr>
                             <td>' . $fetch->id . '</td>
                             <td>' . $fetch->name . '</td>
                             <td>' . $fetch->description . '</td>
+                            <td>' . $productName .  '</td>
                             <td>
                                 <button class="btn btn-info btn-sm" onclick="ajaxLoad(\'' . url('category&action=edit&id=' . $fetch->id) . '\', \'' . $fetch->id . '\')" data-id="' . $fetch->id . '">Edit</button>
                                 <button  class="btn btn-danger btn-sm" onclick="ajaxLoad(\'' . url('category&action=destroy&id=' . $fetch->id) . '\', \'' . $fetch->id . '\')" data-id="' . $fetch->id . '">Delete</button>
