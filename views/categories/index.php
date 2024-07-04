@@ -35,7 +35,7 @@
                     <div class="cmp-tb-hd cmp-int-hd">
                         <h2>Create a new category</h2>
                     </div>
-                    <form onsubmit="submitForm(this); return false;" action="<?=  url('category&action=store') ?>" method="post">
+                    <form onsubmit="submitForm(this); return false;" action="<?= url('category&action=store') ?>" method="post">
                         <div class="row">
                             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                 <div class="form-example-int form-example-st">
@@ -124,7 +124,7 @@
                                             <td><?= htmlspecialchars($category->description) ?></td>
                                             <td>
                                                 <?php if (!empty($category->product_names)) : ?>
-                                                    <?= implode(', ', $category->product_names) ?>
+                                                    <?= implode(', ', array_map('htmlspecialchars', $category->product_names)) ?>
                                                 <?php else : ?>
                                                     No products
                                                 <?php endif; ?>
