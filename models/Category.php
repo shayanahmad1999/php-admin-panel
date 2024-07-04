@@ -61,4 +61,12 @@ class Category extends DatabaseManager{
         }
         return [];
     }
+
+    // public function getProductNames($id)
+    // {
+    //     $results = $this->model->join('products', 'id', 'product_id', 'products.name', ['categories.id' => $id]);
+    //     return array_map(function($result) {
+    //         return $result->name;
+    //     }, $results);
+    // }
 }
