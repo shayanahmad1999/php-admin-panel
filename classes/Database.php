@@ -138,5 +138,29 @@ class DatabaseManager
         $stmt->execute([$value]);
         return $stmt->fetchAll(PDO::FETCH_CLASS, get_class($this));
     }
+
+    public function join($relatedTable, $foreignKey, $localKey, $relatedFields = '*', $conditions = [])
+    {
+        try {
+            $sql = "SELECT $this->table.*, $relatedFields FROM $this->table
+                    JOIN $relatedTable ON $this->table.$localKey = $relatedTable.$foreignKey";
+
+            $params = [];
+            if (!empty($conditions)) {
+                $sql .= " WHERE ";
+                foreach ($conditions as $key => $value) {
+                    $sql .= "$this->table.$key = ? AND ";
+                    $params[] = $value;
+                }
+                $sql = rtrim($sql, " AND ");
+            }
+
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute($params);
+            return $stmt->fetchAll(PDO::FETCH_OBJ);
+        } catch (PDOException $e) {
+            return [];
+        }
+    }
        
 }
